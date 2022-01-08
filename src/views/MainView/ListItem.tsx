@@ -7,14 +7,15 @@ import './list-item.css';
 interface Props {
   label: string;
   destination: string;
+  className?: string;
 };
 
-const ListItem = ({ label, destination }: Props): JSX.Element => {
+const ListItem = ({ label, destination, className }: Props): JSX.Element => {
   const navigate = useNavigate();
   const onClick = () => navigate(destination);
 
   return (
-    <Paper elevation={1}>
+    <Paper elevation={1} className={className}>
       <Grid container className="list-item" onClick={onClick}>
         <Grid item xs={10} className="item">
           {label}

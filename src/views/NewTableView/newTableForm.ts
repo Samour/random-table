@@ -94,10 +94,12 @@ export const useNewTableForm = () => {
   });
 
   const createTable = () => {
-    createTableService.createTable({
+    const items = tableItems.map((i) => i);
+    items.sort((a, b) => Number.parseInt(a.rangeLow) - Number.parseInt(b.rangeLow));
+    createTableService({
       id: uuid(),
       name: tableName,
-      items: tableItems.map((i) => ({
+      items: items.map((i) => ({
         id: i.id,
         name: i.name,
         weight: Number.parseInt(i.rangeHigh) - Number.parseInt(i.rangeLow) + 1,

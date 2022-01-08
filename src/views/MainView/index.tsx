@@ -1,16 +1,12 @@
 import React from 'react';
-import { Container, Grid } from '@mui/material';
-import ListItem from './ListItem';
-import { AppState } from 'src/store/model';
 import { useSelector } from 'react-redux';
+import { Container, Grid } from '@mui/material';
+import { AppState } from 'src/store/model';
+import { RandomTable } from 'src/model/RandomTable';
+import ListItem from './ListItem';
+import './index.css';
 
-interface TableSummary {
-  id: string;
-  name: string;
-}
-
-const selector = (state: AppState): TableSummary[] => state.tables
-  .map(({ id, name }) => ({ id, name }));
+const selector = (state: AppState): RandomTable[] => state.tables;
 
 const MainView = (): JSX.Element => {
   const tables = useSelector(selector);
@@ -29,7 +25,7 @@ const MainView = (): JSX.Element => {
           ))
         }
         <Grid item xs={12}>
-          <ListItem label="New Table" destination="/new-table" />
+          <ListItem label="New Table" destination="/new-table" className="new-table" />
         </Grid>
       </Grid>
     </Container>

@@ -1,0 +1,8 @@
+#ManagementControl {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.management-control.drop-down-container {
+  margin: 3px;
+}

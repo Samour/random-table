@@ -1,7 +1,5 @@
-import { Dispatch } from 'react';
 import { useDispatch } from 'react-redux';
-import { NavigateFunction, useNavigate } from 'react-router-dom';
-import { Mutation } from 'src/store/mutations/Mutation';
+import { useNavigate } from 'react-router-dom';
 import { addTableMutation } from 'src/store/mutations/tables/AddTableMutation';
 
 interface TableItemSpec {
@@ -16,24 +14,17 @@ export interface CreateTableSpec {
   items: TableItemSpec[];
 }
 
-export interface CreateTableService {
-  createTable(table: CreateTableSpec): void
-}
+export type CreateTableService = (table: CreateTableSpec) => void;
 
-class CreateTableServiceImpl implements CreateTableService {
+export const useCreateTableService = (): CreateTableService => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  constructor(private readonly dispatch: Dispatch<Mutation>, private readonly navigate: NavigateFunction) { }
-
-  createTable(table: CreateTableSpec): void {
-    this.dispatch(addTableMutation({
+  return (table: CreateTableSpec) => {
+    dispatch(addTableMutation({
       ...table,
       size: 20,
     }));
-    this.navigate("/");
-  }
-}
-
-export const useCreateTableService = (): CreateTableService => new CreateTableServiceImpl(
-  useDispatch(),
-  useNavigate(),
-);
+    navigate("/");
+  };
+};
