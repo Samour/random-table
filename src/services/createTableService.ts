@@ -2,13 +2,12 @@ import { Dispatch } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { Mutation } from 'src/store/mutations/Mutation';
-import { addTableMutation } from 'src/store/mutations/tables/AddTableMutaton';
+import { addTableMutation } from 'src/store/mutations/tables/AddTableMutation';
 
 interface TableItemSpec {
   id: string;
   name: string;
-  rangeLow: number;
-  rangeHigh: number;
+  weight: number;
 }
 
 export interface CreateTableSpec {

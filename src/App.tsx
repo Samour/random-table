@@ -4,6 +4,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainView from './views/MainView';
 import NewTableView from './views/NewTableView';
 import { store } from './store';
+import { startDataSync } from './services/dataPersistanceService';
+
+startDataSync(store);
 
 function App() {
   return (

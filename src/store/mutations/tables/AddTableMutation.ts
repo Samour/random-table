@@ -1,7 +1,8 @@
-import { RandomTable } from 'src/store/model/RandomTable';
+import { RandomTable } from 'src/model/RandomTable';
+import { Mutation } from '../Mutation';
 import { MutationType } from '../MutationType';
 
-export interface AddTableMutation {
+export interface AddTableMutation extends Mutation {
   type: MutationType.ADD_TABLE;
   table: RandomTable;
 }

@@ -1,8 +1,7 @@
 export interface RandomTableItem {
   id: string;
   name: string;
-  rangeLow: number;
-  rangeHigh: number;
+  weight: number;
 }
 
 export interface RandomTable {

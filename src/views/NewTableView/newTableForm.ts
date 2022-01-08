@@ -100,8 +100,7 @@ export const useNewTableForm = () => {
       items: tableItems.map((i) => ({
         id: i.id,
         name: i.name,
-        rangeLow: Number.parseInt(i.rangeLow),
-        rangeHigh: Number.parseInt(i.rangeHigh),
+        weight: Number.parseInt(i.rangeHigh) - Number.parseInt(i.rangeLow) + 1,
       })),
     });
   };
