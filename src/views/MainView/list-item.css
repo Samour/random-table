@@ -1,13 +1,13 @@
-#NewTableButton {
+#MainView .list-item {
   padding: 20px 15px;
   cursor: pointer;
 }
 
-#NewTableButton .item {
+#MainView .list-item .item {
   display: flex;
   align-items: center;
 }
 
-#NewTableButton .icon {
+#MainView .list-item .icon {
   justify-content: flex-end;
 }

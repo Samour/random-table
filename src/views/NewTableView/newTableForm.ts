@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useCreateTableService } from 'src/services/createTableService';
 import { v4 as uuid } from 'uuid';
 import { validateTableItems } from './validateTableItems';
 
@@ -30,6 +31,7 @@ const validNumeric = (value: string): boolean => {
 };
 
 export const useNewTableForm = () => {
+  const createTableService = useCreateTableService();
   const [tableName, setTableName] = useState('');
   const [tableNameError, setTableNameError] = useState('');
   const [tableItems, setTableItems] = useState<FormTableItem[]>([]);
@@ -92,6 +94,19 @@ export const useNewTableForm = () => {
   });
 
   const createTable = () => {
+    createTableService.createTable({
+      id: uuid(),
+      name: tableName,
+      items: tableItems.map((i) => ({
+        id: i.id,
+        name: i.name,
+        rangeLow: Number.parseInt(i.rangeLow),
+        rangeHigh: Number.parseInt(i.rangeHigh),
+      })),
+    });
+  };
+
+  const validateAndCreateTable = () => {
     let valid = true;
     if (!tableName) {
       setTableNameError('Table must have a name');
@@ -120,10 +135,16 @@ export const useNewTableForm = () => {
       if (valid && !allNumbersCovered) {
         setConfirmationModalMessage('Not all die results are covered by this table. Do you want to create it anyway?');
         setConfirmationModalOpen(true);
+        valid = false;
       }
     } else if (valid) {
       setConfirmationModalMessage('You have not added any items to this table. Do you want to create it anyway?');
       setConfirmationModalOpen(true);
+      valid = false;
+    }
+
+    if (valid) {
+      createTable();
     }
   };
 
@@ -139,7 +160,8 @@ export const useNewTableForm = () => {
     },
     addTableItem,
     tableItemListeners,
-    createTable,
+    createTable: validateAndCreateTable,
     closeConfirmationModal: () => setConfirmationModalOpen(false),
+    confirmCreation: createTable,
   };
 };

@@ -22,6 +22,7 @@ const NewTableView = (): JSX.Element => {
     tableItemListeners,
     createTable,
     closeConfirmationModal,
+    confirmCreation,
   } = useNewTableForm();
 
   return (
@@ -80,7 +81,7 @@ const NewTableView = (): JSX.Element => {
         open={confirmationModalOpen}
         message={confirmationModalMessage}
         onClose={closeConfirmationModal}
-        onConfirm={() => null} />
+        onConfirm={confirmCreation} />
     </Container>
   );
 };
