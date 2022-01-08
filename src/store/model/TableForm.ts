@@ -1,3 +1,8 @@
+export interface TableFormName {
+  name: string;
+  error: string;
+}
+
 export interface TableFormItem {
   id: string;
   name: string;
@@ -8,10 +13,13 @@ export interface TableFormItem {
   rangeHighError: boolean;
 }
 
+export interface TableFormConfirmationModal {
+  open: boolean;
+  message: string;
+}
+
 export interface TableForm {
-  name: string;
-  nameError: string;
+  name: TableFormName;
   items: TableFormItem[];
-  confirmationModalOpen: boolean;
-  confirmationModalMessage: string;
+  confirmationModal: TableFormConfirmationModal;
 }

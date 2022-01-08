@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useCreateTableService } from 'src/services/tableForm/createTableService';
 import { useDispatch } from 'react-redux';
-import { tableFormAddItemMutation } from 'src/store/mutations/tableForm/TableFormAddItemMutation';
-import { tableFormUpdateNameMutation } from 'src/store/mutations/tableForm/TableFormUpdateName';
+import { tableFormAddItemMutation } from 'src/store/mutations/tableForm/item/TableFormAddItemMutation';
+import { tableFormNameMutation } from 'src/store/mutations/tableForm/name/TableFormNameMutation';
 import { useTableFormValidationService } from 'src/services/tableForm/validation/tableFormValidationService';
-import { tableFormConfirmationModalMutation } from 'src/store/mutations/tableForm/TableFormConfirmationModalMutation';
+import { tableFormConfirmationModalMutation } from 'src/store/mutations/tableForm/confirmationModal/TableFormConfirmationModalMutation';
 import { resetTableFormMutation } from 'src/store/mutations/tableForm/ResetTableFormMutation';
 
 export const useNewTableForm = () => {
@@ -15,7 +15,7 @@ export const useNewTableForm = () => {
   useEffect(() => () => { dispatch(resetTableFormMutation()) }, []);
 
   const setTableName = (name: string) => {
-    dispatch(tableFormUpdateNameMutation(name));
+    dispatch(tableFormNameMutation(name));
   };
 
   const addTableItem = () => {

@@ -1,5 +1,5 @@
-import { Mutation } from '../Mutation';
-import { MutationType } from '../MutationType';
+import { Mutation } from '../../Mutation';
+import { MutationType } from '../../MutationType';
 
 export interface TableFormItemRangeErrorMutation extends Mutation {
   type: MutationType.TABLE_FORM_ITEM_RANGE_ERROR;

@@ -9,7 +9,7 @@ const selector = (state: AppState): TableForm => state.tableForm;
 
 export const useCreateTableService = () => {
   const {
-    name,
+    name: { name },
     items,
   } = useSelector(selector);
   const dispatch = useDispatch();

@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { AppState } from 'src/store/model';
 import { TableFormItem } from 'src/store/model/TableForm';
 import { Mutation } from 'src/store/mutations/Mutation';
-import { tableFormItemNameErrorMutation } from 'src/store/mutations/tableForm/TableFormItemNameErrorMutation';
+import { tableFormItemNameErrorMutation } from 'src/store/mutations/tableForm/item/TableFormItemNameErrorMutation';
 
 interface State {
   items: TableFormItem[];

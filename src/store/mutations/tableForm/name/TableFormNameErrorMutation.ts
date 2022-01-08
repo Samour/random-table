@@ -1,5 +1,5 @@
-import { Mutation } from '../Mutation';
-import { MutationType } from '../MutationType';
+import { Mutation } from '../../Mutation';
+import { MutationType } from '../../MutationType';
 
 export interface TableFormNameErrorMutation extends Mutation {
   type: MutationType.TABLE_FORM_NAME_ERROR;

@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { validNumeric } from 'src/services/tableForm/validation/validNumeric';
 import { AppState } from 'src/store/model';
 import { TableFormItem } from 'src/store/model/TableForm';
-import { tableFormRemoveItemMutation } from 'src/store/mutations/tableForm/TableFormRemoveItemMutation';
-import { tableFormUpdateItemNameMutation } from 'src/store/mutations/tableForm/TableFormUpdateItemNameMutation';
-import { tableFormUpdateRangeHighMutation } from 'src/store/mutations/tableForm/TableFormUpdateRangeHighMutation';
-import { tableFormUpdateRangeLowMutation } from 'src/store/mutations/tableForm/TableFormUpdateRangeLowMutation';
+import { tableFormRemoveItemMutation } from 'src/store/mutations/tableForm/item/TableFormRemoveItemMutation';
+import { tableFormUpdateItemNameMutation } from 'src/store/mutations/tableForm/item/TableFormUpdateItemNameMutation';
+import { tableFormUpdateRangeHighMutation } from 'src/store/mutations/tableForm/item/TableFormUpdateRangeHighMutation';
+import { tableFormUpdateRangeLowMutation } from 'src/store/mutations/tableForm/item/TableFormUpdateRangeLowMutation';
 
 const selector = (itemId: string) => (state: AppState): TableFormItem =>
   state.tableForm.items.find(({ id }) => id === itemId) as TableFormItem;

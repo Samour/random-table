@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { AppState } from 'src/store/model';
 import { TableFormItem } from 'src/store/model/TableForm';
 import { Mutation } from 'src/store/mutations/Mutation';
-import { tableFormItemRangeErrorMutation } from 'src/store/mutations/tableForm/TableFormItemRangeErrorMutation';
+import { tableFormItemRangeErrorMutation } from 'src/store/mutations/tableForm/item/TableFormItemRangeErrorMutation';
 
 interface ErrorResults {
   rangeLowError: boolean;

@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { Mutation } from 'src/store/mutations/Mutation';
-import { tableFormRemoveItemRangeErrorsMutation } from 'src/store/mutations/tableForm/TableFormRemoveItemRangeErrorsMutation';
+import { tableFormRemoveItemRangeErrorsMutation } from 'src/store/mutations/tableForm/item/TableFormRemoveItemRangeErrorsMutation';
 import { useValidateDieCoverage } from './validateDieCoverage';
 import { useValidateItemNames } from './validateItemNames';
 import { useValidateItemRanges } from './validateItemRanges';

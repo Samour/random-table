@@ -15,11 +15,15 @@ const selector = (state: AppState): TableForm => state.tableForm;
 const NewTableView = (): JSX.Element => {
   const navigate = useNavigate();
   const {
-    name,
-    nameError,
+    name: {
+      name,
+      error: nameError,
+    },
     items,
-    confirmationModalOpen,
-    confirmationModalMessage,
+    confirmationModal: {
+      open: confirmationModalOpen,
+      message: confirmationModalMessage,
+    },
   } = useSelector(selector);
 
   const onCancelClick = () => navigate("/");
