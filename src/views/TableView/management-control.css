@@ -4,5 +4,6 @@
 }
 
 .management-control.drop-down-container {
-  margin: 3px;
+  padding: 8px;
+  max-width: 130px;
 }
