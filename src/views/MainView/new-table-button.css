@@ -1,0 +1,13 @@
+#NewTableButton {
+  padding: 20px 15px;
+  cursor: pointer;
+}
+
+#NewTableButton .item {
+  display: flex;
+  align-items: center;
+}
+
+#NewTableButton .icon {
+  justify-content: flex-end;
+}
