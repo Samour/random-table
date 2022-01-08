@@ -1,28 +1,35 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Button, Container, Grid, TextField } from '@mui/material';
-import ConfirmCancelRow from 'src/components/ConfirmCancelRow';
 import Add from '@mui/icons-material/Add';
+import ConfirmCancelRow from 'src/components/ConfirmCancelRow';
+import ConfirmationModal from 'src/components/ConfirmationModal';
+import { AppState } from 'src/store/model';
+import { TableForm } from 'src/store/model/TableForm';
 import { useNewTableForm } from './newTableForm';
 import TableItem from './TableItem';
-import ConfirmationModal from 'src/components/ConfirmationModal';
+
+const selector = (state: AppState): TableForm => state.tableForm;
 
 const NewTableView = (): JSX.Element => {
   const navigate = useNavigate();
+  const {
+    name,
+    nameError,
+    items,
+    confirmationModalOpen,
+    confirmationModalMessage,
+  } = useSelector(selector);
+
   const onCancelClick = () => navigate("/");
 
   const {
-    tableName,
-    tableNameError,
-    tableItems,
-    confirmationModalOpen,
-    confirmationModalMessage,
     setTableName,
     addTableItem,
-    tableItemListeners,
-    createTable,
+    validateAndCreateTable,
     closeConfirmationModal,
-    confirmCreation,
+    createTable,
   } = useNewTableForm();
 
   return (
@@ -40,9 +47,9 @@ const NewTableView = (): JSX.Element => {
               <TextField
                 fullWidth
                 variant="standard"
-                value={tableName}
-                error={!!tableNameError}
-                helperText={tableNameError}
+                value={name}
+                error={!!nameError}
+                helperText={nameError}
                 onChange={(e) => setTableName(e.target.value)} />
             </Grid>
           </Grid>
@@ -59,9 +66,9 @@ const NewTableView = (): JSX.Element => {
           </Grid>
         </Grid>
         {
-          tableItems.map((item) => (
-            <Grid item xs={12} key={item.id}>
-              <TableItem item={item} {...tableItemListeners(item.id)} />
+          items.map(({ id }) => (
+            <Grid item xs={12} key={id}>
+              <TableItem id={id} />
             </Grid>
           ))
         }
@@ -72,7 +79,7 @@ const NewTableView = (): JSX.Element => {
           <Grid container>
             <Grid item xs={1} />
             <Grid item xs={10}>
-              <ConfirmCancelRow confirmText='Create' onCancel={onCancelClick} onConfirm={createTable} />
+              <ConfirmCancelRow confirmText='Create' onCancel={onCancelClick} onConfirm={validateAndCreateTable} />
             </Grid>
           </Grid>
         </Grid>
@@ -81,7 +88,7 @@ const NewTableView = (): JSX.Element => {
         open={confirmationModalOpen}
         message={confirmationModalMessage}
         onClose={closeConfirmationModal}
-        onConfirm={confirmCreation} />
+        onConfirm={createTable} />
     </Container>
   );
 };
