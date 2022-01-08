@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
+import { validateTableItems } from './validateTableItems';
 
 const MIN_RANGE_VALUE = 1;
 const MAX_RANGE_VALUE = 20; // Hardcoded, to become dynamic later
@@ -7,8 +8,11 @@ const MAX_RANGE_VALUE = 20; // Hardcoded, to become dynamic later
 export interface FormTableItem {
   id: string;
   name: string;
+  nameError: string;
   rangeLow: string;
+  rangeLowError: boolean;
   rangeHigh: string;
+  rangeHighError: boolean;
 }
 
 const validNumeric = (value: string): boolean => {
@@ -27,7 +31,10 @@ const validNumeric = (value: string): boolean => {
 
 export const useNewTableForm = () => {
   const [tableName, setTableName] = useState('');
+  const [tableNameError, setTableNameError] = useState('');
   const [tableItems, setTableItems] = useState<FormTableItem[]>([]);
+  const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
+  const [confirmationModalMessage, setConfirmationModalMessage] = useState('');
 
   const nextRangeVal = () => {
     const values = tableItems.map(({ rangeHigh }) => rangeHigh)
@@ -53,8 +60,11 @@ export const useNewTableForm = () => {
       {
         id: uuid(),
         name: '',
+        nameError: '',
         rangeLow: rangeVal,
+        rangeLowError: false,
         rangeHigh: rangeVal,
+        rangeHighError: false,
       },
     ]);
   };
@@ -67,25 +77,69 @@ export const useNewTableForm = () => {
   );
 
   const tableItemListeners = (itemId: string) => ({
-    onNameChange: (name: string) => updateTableItem(itemId, { name }),
+    onNameChange: (name: string) => updateTableItem(itemId, { name, nameError: '' }),
     onRangeLowChange: (rangeLow: string) => {
       if (validNumeric(rangeLow)) {
-        updateTableItem(itemId, { rangeLow });
+        updateTableItem(itemId, { rangeLow, rangeLowError: false });
       }
     },
     onRangeHighChange: (rangeHigh: string) => {
       if (validNumeric(rangeHigh)) {
-        updateTableItem(itemId, { rangeHigh });
+        updateTableItem(itemId, { rangeHigh, rangeHighError: false });
       }
     },
     onRemove: () => setTableItems(tableItems.filter(({ id }) => id !== itemId)),
   });
 
+  const createTable = () => {
+    let valid = true;
+    if (!tableName) {
+      setTableNameError('Table must have a name');
+      valid = false;
+    }
+    if (tableItems.length) {
+      const [tableItemErrors, allNumbersCovered] = validateTableItems(tableItems);
+      if (tableItemErrors.size) {
+        valid = false;
+        setTableItems(
+          tableItems.map((i) => ({
+            ...i,
+            ...(tableItemErrors.get(i.id) ?? {}),
+          })),
+        );
+      } else {
+        setTableItems(
+          tableItems.map((i) => ({
+            ...i,
+            rangeLowError: false,
+            rangeHighError: false,
+          })),
+        );
+      }
+
+      if (valid && !allNumbersCovered) {
+        setConfirmationModalMessage('Not all die results are covered by this table. Do you want to create it anyway?');
+        setConfirmationModalOpen(true);
+      }
+    } else if (valid) {
+      setConfirmationModalMessage('You have not added any items to this table. Do you want to create it anyway?');
+      setConfirmationModalOpen(true);
+    }
+  };
+
   return {
     tableName,
+    tableNameError,
     tableItems,
-    setTableName,
+    confirmationModalOpen,
+    confirmationModalMessage,
+    setTableName: (name: string) => {
+      setTableName(name);
+      setTableNameError('')
+    },
     addTableItem,
     tableItemListeners,
+    createTable,
+    closeConfirmationModal: () => setConfirmationModalOpen(false),
   };
 };

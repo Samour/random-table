@@ -5,6 +5,7 @@ import ConfirmCancelRow from 'src/components/ConfirmCancelRow';
 import Add from '@mui/icons-material/Add';
 import { useNewTableForm } from './newTableForm';
 import TableItem from './TableItem';
+import ConfirmationModal from 'src/components/ConfirmationModal';
 
 const NewTableView = (): JSX.Element => {
   const navigate = useNavigate();
@@ -12,10 +13,15 @@ const NewTableView = (): JSX.Element => {
 
   const {
     tableName,
+    tableNameError,
     tableItems,
+    confirmationModalOpen,
+    confirmationModalMessage,
     setTableName,
     addTableItem,
     tableItemListeners,
+    createTable,
+    closeConfirmationModal,
   } = useNewTableForm();
 
   return (
@@ -30,7 +36,13 @@ const NewTableView = (): JSX.Element => {
               Table name
             </Grid>
             <Grid item xs={8}>
-              <TextField fullWidth variant="standard" value={tableName} onChange={(e) => setTableName(e.target.value)} />
+              <TextField
+                fullWidth
+                variant="standard"
+                value={tableName}
+                error={!!tableNameError}
+                helperText={tableNameError}
+                onChange={(e) => setTableName(e.target.value)} />
             </Grid>
           </Grid>
         </Grid>
@@ -59,11 +71,16 @@ const NewTableView = (): JSX.Element => {
           <Grid container>
             <Grid item xs={1} />
             <Grid item xs={10}>
-              <ConfirmCancelRow confirmText='Create' onCancel={onCancelClick} onConfirm={() => null} />
+              <ConfirmCancelRow confirmText='Create' onCancel={onCancelClick} onConfirm={createTable} />
             </Grid>
           </Grid>
         </Grid>
       </Grid>
+      <ConfirmationModal
+        open={confirmationModalOpen}
+        message={confirmationModalMessage}
+        onClose={closeConfirmationModal}
+        onConfirm={() => null} />
     </Container>
   );
 };

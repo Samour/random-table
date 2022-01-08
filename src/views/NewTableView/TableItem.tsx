@@ -25,6 +25,8 @@ const TableItem = ({
           fullWidth
           variant="standard"
           value={item.name}
+          error={!!item.nameError}
+          helperText={item.nameError}
           onChange={(e) => onNameChange(e.target.value)} />
       </Grid>
       <Grid item xs={2}>
@@ -32,6 +34,7 @@ const TableItem = ({
           variant="outlined"
           size='small'
           value={item.rangeLow}
+          error={item.rangeLowError}
           onChange={(e) => onRangeLowChange(e.target.value)} />
       </Grid>
       <Grid item xs={2}>
@@ -39,6 +42,7 @@ const TableItem = ({
           variant="outlined"
           size='small'
           value={item.rangeHigh}
+          error={item.rangeHighError}
           onChange={(e) => onRangeHighChange(e.target.value)} />
       </Grid>
       <Grid item xs={2}>
