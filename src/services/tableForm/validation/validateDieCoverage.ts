@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { AppState } from 'src/store/model';
-import { TableFormItem } from 'src/store/model/TableForm';
+import { TableFormItem, TableFormMode } from 'src/store/model/TableForm';
 import { Mutation } from 'src/store/mutations/Mutation';
 import { tableFormConfirmationModalMutation } from 'src/store/mutations/tableForm/confirmationModal/TableFormConfirmationModalMutation';
 
@@ -8,13 +8,25 @@ const MIN_RANGE_VALUE = 1;
 const MAX_RANGE_VALUE = 20; // Hardcoded, to become dynamic later
 
 interface State {
+  mode: TableFormMode;
   items: TableFormItem[];
 }
 
-const selector = (state: AppState): State => ({ items: state.tableForm.items });
+const selector = (state: AppState): State => ({
+  mode: state.tableForm.mode,
+  items: state.tableForm.items,
+});
 
 export const useValidateDieCoverage = () => {
-  const { items } = useSelector(selector);
+  const { mode, items } = useSelector(selector);
+
+  const warningMessage = () => {
+    if (mode == TableFormMode.CREATE) {
+      return 'Not all die results are covered by this table. Do you want to create it anyway?';
+    } else {
+      return 'Not all die results are covered by this table. Do you want to update it anyway?';
+    }
+  };
 
   return (): Mutation | null => {
     const ranges: [string, number, number][] = items
@@ -39,10 +51,7 @@ export const useValidateDieCoverage = () => {
     if (allNumbersCovered) {
       return null;
     } else {
-      return tableFormConfirmationModalMutation(
-        true,
-        'Not all die results are covered by this table. Do you want to create it anyway?',
-      );
+      return tableFormConfirmationModalMutation(true, warningMessage());
     }
   };
 };

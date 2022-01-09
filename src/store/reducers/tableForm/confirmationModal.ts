@@ -10,7 +10,7 @@ const initialState: TableFormConfirmationModal = {
 
 export default (state: TableFormConfirmationModal | undefined, mutation: Mutation): TableFormConfirmationModal => {
   state = state ?? initialState;
-  if (mutation.type === MutationType.RESET_TABLE_FORM) {
+  if (mutation.type === MutationType.RESET_TABLE_FORM || mutation.type === MutationType.FILL_TABLE_FORM) {
     return initialState;
   } else if (mutation.type === MutationType.TABLE_FORM_CONFIRMATION_MODAL) {
     const {

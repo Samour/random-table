@@ -1,6 +1,9 @@
 #ManagementControl {
   display: flex;
-  flex-direction: row-reverse;
+}
+
+#ManagementControl .roll-button {
+  margin-right: auto;
 }
 
 .management-control.drop-down-container {

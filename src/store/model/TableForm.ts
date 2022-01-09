@@ -1,3 +1,8 @@
+export enum TableFormMode {
+  CREATE = 'CREATE',
+  EDIT = 'EDIT',
+}
+
 export interface TableFormName {
   name: string;
   error: string;
@@ -19,6 +24,7 @@ export interface TableFormConfirmationModal {
 }
 
 export interface TableForm {
+  mode: TableFormMode;
   name: TableFormName;
   items: TableFormItem[];
   confirmationModal: TableFormConfirmationModal;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Grid, Button, Popover } from '@mui/material';
 import DeleteTableConfirm from './DeleteTableConfirm';
 import { useRollDiceService } from 'src/services/rollDiceService';
@@ -18,8 +19,10 @@ interface State {
 const selector = (state: AppState): State => ({ rollInProgress: state.diceRoll.rollInProgress });
 
 const ManagementControl = ({ table }: Props): JSX.Element => {
+  const navigate = useNavigate();
   const { rollInProgress } = useSelector(selector);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const { tableId } = useParams();
   const [deleteTableOpen, setDeleteTableOpen] = useState(false);
   const rollDice = useRollDiceService();
 
@@ -28,6 +31,7 @@ const ManagementControl = ({ table }: Props): JSX.Element => {
     onClose();
     rollDice(table);
   };
+  const onEditClick = () => navigate(`/table/${tableId}/edit`);
   const onDeleteClick = () => {
     onClose();
     setDeleteTableOpen(true);
@@ -36,6 +40,7 @@ const ManagementControl = ({ table }: Props): JSX.Element => {
 
   return (
     <Grid item xs={12} id="ManagementControl">
+      <Button className='roll-button' disabled={rollInProgress} onClick={onRollClick}>Roll</Button>
       <Button variant="contained" onClick={(e) => setAnchorEl(e.currentTarget)}>Manage</Button>
       <Popover
         open={!!anchorEl}
@@ -45,7 +50,7 @@ const ManagementControl = ({ table }: Props): JSX.Element => {
         <div className="management-control drop-down-container">
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <Button disabled={rollInProgress} onClick={onRollClick}>Roll</Button>
+              <Button onClick={onEditClick}>Edit&nbsp;&nbsp;&nbsp;&nbsp;</Button>
             </Grid>
             <Grid item xs={12}>
               <Button color="error" onClick={onDeleteClick}>Delete table</Button>

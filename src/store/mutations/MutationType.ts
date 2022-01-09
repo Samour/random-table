@@ -1,5 +1,6 @@
 export enum MutationType {
   RESET_TABLE_FORM = 'tableForm/reset',
+  FILL_TABLE_FORM = 'tableForm/fill',
 
   TABLE_FORM_NAME_CHANGE = 'tableForm/name',
   TABLE_FORM_NAME_ERROR = 'tableForm/name/error',
@@ -16,6 +17,7 @@ export enum MutationType {
   TABLE_FORM_CONFIRMATION_MODAL = 'tableForm/confirmationModal',
 
   ADD_TABLE = 'tables/add',
+  UPDATE_TABLE = 'tables/update',
   INITIALISE_TABLES = 'tables/initialise',
   DELETE_TABLE = 'tables/delete',
 

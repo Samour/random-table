@@ -6,6 +6,7 @@ import NewTableView from './views/NewTableView';
 import { store } from './store';
 import { startDataSync } from './services/dataPersistanceService';
 import TableView from './views/TableView';
+import EditTableView from './views/EditTableView';
 
 startDataSync(store);
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<MainView />} />
           <Route path="/new-table" element={<NewTableView />} />
           <Route path="/table/:tableId" element={<TableView />} />
+          <Route path="/table/:tableId/edit" element={<EditTableView />} />
         </Routes>
       </BrowserRouter>
     </Provider>

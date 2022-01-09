@@ -1,6 +1,7 @@
 import { TableFormName } from 'src/store/model/TableForm';
 import { Mutation } from 'src/store/mutations/Mutation';
 import { MutationType } from 'src/store/mutations/MutationType';
+import { FillTableFormMutation } from 'src/store/mutations/tableForm/FillTableFormMutation';
 import { TableFormNameErrorMutation } from 'src/store/mutations/tableForm/name/TableFormNameErrorMutation';
 import { TableFormNameMutation } from 'src/store/mutations/tableForm/name/TableFormNameMutation';
 
@@ -25,6 +26,12 @@ export default (state: TableFormName | undefined, mutation: Mutation): TableForm
     return {
       ...state,
       error: nameError,
+    };
+  } else if (mutation.type === MutationType.FILL_TABLE_FORM) {
+    const { table: { name } } = mutation as FillTableFormMutation;
+    return {
+      name,
+      error: '',
     };
   } else {
     return state;
